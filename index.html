@@ -41,6 +41,7 @@
 
       html {
         scroll-behavior: smooth;
+        scroll-padding-top: 100px;
       }
 
       body {
@@ -245,7 +246,7 @@
         align-items: center;
         display: grid;
         gap: 64px;
-        grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+        grid-template-columns: minmax(0, 1fr) minmax(200px, 280px);
         padding: 16px 0 64px;
       }
 
@@ -513,6 +514,7 @@
       }
 
       .work-card {
+        align-content: start;
         background: var(--canvas);
         border-radius: 14px;
         color: var(--ink);
@@ -524,6 +526,52 @@
         box-shadow: var(--shadow-float);
       }
 
+      a.work-plate {
+        text-decoration: none;
+      }
+
+      a.work-plate::before {
+        background: rgba(255, 255, 255, 0);
+        border-radius: inherit;
+        content: '';
+        inset: 0;
+        position: absolute;
+        transition: background 240ms ease;
+        z-index: 3;
+      }
+
+      a.work-plate:hover::before {
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      .work-plate-github {
+        align-items: center;
+        background: #fff;
+        border-radius: 9999px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+        display: inline-flex;
+        height: 52px;
+        justify-content: center;
+        left: 50%;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.72);
+        transition: opacity 220ms ease, transform 220ms ease;
+        width: 52px;
+        z-index: 4;
+      }
+
+      .work-plate-github svg {
+        height: 28px;
+        width: 28px;
+      }
+
+      a.work-plate:hover .work-plate-github {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
       .work-plate {
         align-content: space-between;
         aspect-ratio: 1;
@@ -531,19 +579,45 @@
         border: 1px solid var(--hairline-soft);
         border-radius: 14px;
         display: grid;
+        overflow: hidden;
         padding: 16px;
+        position: relative;
         transition: box-shadow 160ms ease;
+      }
+
+      .work-plate-img {
+        height: 100%;
+        left: 0;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        transition: transform 320ms ease;
+        width: 100%;
+        z-index: 0;
+      }
+
+      .work-card:hover .work-plate-img {
+        transform: scale(1.04);
+      }
+
+      .work-plate-scrim {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.52) 100%);
+        inset: 0;
+        position: absolute;
+        z-index: 1;
       }
 
       .work-icon {
         align-items: center;
-        background: var(--canvas);
+        background: rgba(255, 255, 255, 0.92);
         border-radius: 9999px;
         color: var(--primary);
         display: inline-flex;
         height: 40px;
         justify-content: center;
+        position: relative;
         width: 40px;
+        z-index: 2;
       }
 
       .work-icon svg {
@@ -554,9 +628,38 @@
       }
 
       .work-label {
-        color: var(--muted);
+        color: rgba(255, 255, 255, 0.88);
         font-size: 14px;
+        font-weight: 500;
         line-height: 1.43;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hobby-row {
+        align-items: center;
+        display: flex;
+        gap: 8px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hobby-row span {
+        align-items: center;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        display: inline-flex;
+        height: 36px;
+        justify-content: center;
+        width: 36px;
+      }
+
+      .hobby-row svg {
+        height: 18px;
+        stroke: #fff;
+        stroke-width: 2;
+        width: 18px;
       }
 
       .work-card p {
@@ -643,7 +746,7 @@
         gap: 8px 24px;
         justify-content: space-between;
         line-height: 1.23;
-        padding: 24px 0 32px;
+        padding: 24px 0 128px;
       }
 
       .site-footer p {
@@ -801,6 +904,16 @@
             </a>
           </li>
           <li>
+            <a class="product-tab" href="#courses">
+              <svg aria-hidden="true" viewBox="0 0 32 32" fill="none">
+                <path d="M16 8l-10 5 10 5 10-5-10-5z" />
+                <path d="M6 18l10 5 10-5" />
+                <path d="M6 13v5" />
+              </svg>
+              <span>Courses</span>
+            </a>
+          </li>
+          <li>
             <a class="product-tab" href="#cv">
               <span class="new-tag">PDF</span>
               <svg aria-hidden="true" viewBox="0 0 32 32" fill="none">
@@ -828,32 +941,13 @@
     <main id="main">
       <section class="hero" aria-labelledby="intro-title">
         <div>
-          <div class="quick-links" aria-label="Quick links">
-            <a class="quick-link" href="#about">
-              <strong>About</strong>
-              <span>Personal profile</span>
-            </a>
-            <a class="quick-link" href="#work">
-              <strong>Work</strong>
-              <span>Projects and notes</span>
-            </a>
-            <a class="quick-link" href="#cv">
-              <strong>CV</strong>
-              <span>Download PDF</span>
-            </a>
-            <a class="quick-orb" href="#work" aria-label="Jump to selected work">
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12h14" />
-                <path d="m13 6 6 6-6 6" />
-              </svg>
-            </a>
-          </div>
-
-          <p class="eyebrow">Personal website</p>
-          <h1 id="intro-title">Hi, I am cloNoey.</h1>
+          <p class="eyebrow">Computer Science &amp; Engineering @ SNU</p>
+          <h1 id="intro-title">Hi, I'm Seungyeon.</h1>
           <p class="lead">
-            I build thoughtful digital experiences, explore creative technology,
-            and turn ideas into clear, usable projects.
+            I build apps that turn fragmented information into clean, usable
+            experiences — from dance class discovery to campus club search.
+            I'm also exploring large language models, agent architectures,
+            and long-term personalized memory.
           </p>
           <div class="actions" aria-label="Primary links">
             <a class="button primary" href="assets/cv.pdf">Download CV</a>
@@ -870,36 +964,31 @@
               height="800"
             >
             <span class="floating-badge">Profile</span>
-            <span class="heart-dot" aria-hidden="true">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 21s-7-4.4-9.2-8.7C1.3 9.4 2.8 6 6 5.4c1.9-.4 3.8.5 5 2 1.2-1.5 3.1-2.4 5-2 3.2.6 4.7 4 3.2 6.9C19 16.6 12 21 12 21z" />
-              </svg>
-            </span>
           </div>
           <div class="profile-meta">
             <div>
               <h3>cloNoey</h3>
               <p>Software, design, and practical problem solving</p>
             </div>
-            <span class="rating" aria-label="Featured profile">Featured</span>
           </div>
         </aside>
       </section>
 
       <section class="section section-grid" id="about" aria-labelledby="about-title">
         <div>
-          <h2 id="about-title">Focused on simple, useful web experiences.</h2>
+          <h2 id="about-title">Seungyeon Kwag</h2>
           <p class="section-kicker">About</p>
+          <p class="section-kicker" style="margin-top:6px;">Computer Science &amp; Engineering</p>
         </div>
         <div class="body-copy">
           <p>
-            This site is a lightweight home for a short introduction, selected
-            work, and a downloadable CV. I care about clear interfaces,
-            reliable systems, and ideas that are easy to understand.
+            I'm interested in large language models, agent architectures,
+            multimodal perceptions, and long-term personalized memory.
           </p>
           <p>
-            My work often sits at the intersection of software, design, and
-            practical problem solving.
+            I enjoy exploring how AI systems can understand and remember the
+            world across modalities and over time — building toward agents that
+            are genuinely helpful and context-aware.
           </p>
         </div>
       </section>
@@ -912,61 +1001,123 @@
           </div>
           <ul class="card-grid">
             <li class="work-card">
-              <div class="work-plate">
+              <a class="work-plate" href="https://github.com/cloNoey/ODDC-cloNoey" target="_blank" rel="noopener noreferrer">
+                <img class="work-plate-img" src="assets/card-dance.jpg" alt="">
+                <div class="work-plate-scrim"></div>
                 <span class="work-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M4 6h16v12H4z" />
-                    <path d="M8 10h8M8 14h5" />
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
                   </svg>
                 </span>
-                <span class="work-label">Interface</span>
-              </div>
+                <span class="work-plate-github" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="#24292e"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385c.6.105.825-.255.825-.57c0-.285-.015-1.23-.015-2.235c-3.015.555-3.795-.735-4.035-1.41c-.135-.345-.72-1.41-1.23-1.695c-.42-.225-1.02-.78-.015-.795c.945-.015 1.62.87 1.845 1.23c1.08 1.815 2.805 1.305 3.495.99c.105-.78.42-1.305.765-1.605c-2.67-.3-5.46-1.335-5.46-5.925c0-1.305.465-2.385 1.23-3.225c-.12-.3-.54-1.53.12-3.18c0 0 1.005-.315 3.3 1.23c.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23c.66 1.65.24 2.88.12 3.18c.765.84 1.23 1.905 1.23 3.225c0 4.605-2.805 5.625-5.475 5.925c.435.375.81 1.095.81 2.22c0 1.605-.015 2.895-.015 3.3c0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                </span>
+                <span class="work-label">Personal Project</span>
+              </a>
               <div>
-                <h3>Web Experiences</h3>
+                <h3>ODDC — One Day Dance Class</h3>
                 <p>
-                  Simple, responsive pages and tools that make information
-                  easier to scan, use, and maintain.
+                  Dance class discovery platform that structures unformatted
+                  Instagram data into a searchable DB — built with React, FastAPI,
+                  and Gemini AI for automated data extraction.
+                </p>
+              </div>
+            </li>
+            <li class="work-card">
+              <a class="work-plate" href="https://github.com/wafflestudio/allclear-app" target="_blank" rel="noopener noreferrer">
+                <img class="work-plate-img" src="assets/card-club.jpg" alt="">
+                <div class="work-plate-scrim"></div>
+                <span class="work-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </span>
+                <span class="work-plate-github" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="#24292e"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385c.6.105.825-.255.825-.57c0-.285-.015-1.23-.015-2.235c-3.015.555-3.795-.735-4.035-1.41c-.135-.345-.72-1.41-1.23-1.695c-.42-.225-1.02-.78-.015-.795c.945-.015 1.62.87 1.845 1.23c1.08 1.815 2.805 1.305 3.495.99c.105-.78.42-1.305.765-1.605c-2.67-.3-5.46-1.335-5.46-5.925c0-1.305.465-2.385 1.23-3.225c-.12-.3-.54-1.53.12-3.18c0 0 1.005-.315 3.3 1.23c.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23c.66 1.65.24 2.88.12 3.18c.765.84 1.23 1.905 1.23 3.225c0 4.605-2.805 5.625-5.475 5.925c.435.375.81 1.095.81 2.22c0 1.605-.015 2.895-.015 3.3c0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                </span>
+                <span class="work-label">Club Activity</span>
+              </a>
+              <div>
+                <h3>AllClear App</h3>
+                <p>
+                  Club discovery and review app (React Native) built with
+                  Clean Architecture — featuring search, rankings, and a
+                  type-safe custom repository layer.
                 </p>
               </div>
             </li>
             <li class="work-card">
               <div class="work-plate">
-                <span class="work-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M12 3v18" />
-                    <path d="M5 8h14M7 16h10" />
-                    <path d="M6 4h12v16H6z" />
-                  </svg>
-                </span>
-                <span class="work-label">Experiment</span>
+                <img class="work-plate-img" src="assets/card-gaming.jpg" alt="">
+                <div class="work-plate-scrim"></div>
+                <div class="hobby-row" aria-hidden="true">
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <rect x="2" y="7" width="20" height="14" rx="2" />
+                      <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                      <line x1="12" y1="12" x2="12" y2="16" />
+                      <line x1="10" y1="14" x2="14" y2="14" />
+                    </svg>
+                  </span>
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                      <line x1="6" y1="1" x2="6" y2="4" />
+                      <line x1="10" y1="1" x2="10" y2="4" />
+                      <line x1="14" y1="1" x2="14" y2="4" />
+                    </svg>
+                  </span>
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <rect x="2" y="6" width="20" height="12" rx="2" />
+                      <path d="M12 12h.01" />
+                      <path d="M7 12h.01" />
+                      <path d="M17 12h.01" />
+                      <path d="M12 8v8" />
+                    </svg>
+                  </span>
+                </div>
+                <span class="work-label">Hobbies</span>
               </div>
               <div>
-                <h3>Creative Technology</h3>
-                <p>
-                  Small experiments that combine interaction, visual systems,
-                  and thoughtful implementation details.
-                </p>
-              </div>
-            </li>
-            <li class="work-card">
-              <div class="work-plate">
-                <span class="work-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M6 4h12v16H6z" />
-                    <path d="M9 8h6M9 12h6M9 16h3" />
-                  </svg>
-                </span>
-                <span class="work-label">Writing</span>
-              </div>
-              <div>
-                <h3>Learning Notes</h3>
-                <p>
-                  Notes, references, and project writeups that turn exploration
-                  into reusable knowledge.
-                </p>
+                <h3>Outside the Screen</h3>
+                <p>Netflix &nbsp;·&nbsp; Exercise &nbsp;·&nbsp; Gaming</p>
               </div>
             </li>
           </ul>
+        </div>
+      </section>
+
+      <section class="section section-grid" id="courses" aria-labelledby="courses-title">
+        <div>
+          <h2 id="courses-title">Planned Coursework</h2>
+          <p class="section-kicker">Courses</p>
+        </div>
+        <div>
+          <div style="margin-bottom:24px;">
+            <h3>CS Foundations</h3>
+            <ul class="contact-list">
+              <li><span class="pill-link">Operating Systems</span></li>
+              <li><span class="pill-link">Computer Networks</span></li>
+              <li><span class="pill-link">Database Systems</span></li>
+              <li><span class="pill-link">Algorithms &amp; Data Structures</span></li>
+              <li><span class="pill-link">Computer Architecture</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>AI / Machine Learning</h3>
+            <ul class="contact-list">
+              <li><span class="pill-link">Machine Learning</span></li>
+              <li><span class="pill-link">Deep Learning</span></li>
+              <li><span class="pill-link">Natural Language Processing</span></li>
+              <li><span class="pill-link">Computer Vision</span></li>
+              <li><span class="pill-link">Reinforcement Learning</span></li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -976,23 +1127,34 @@
           <p class="section-kicker">CV</p>
         </div>
         <div class="cv-panel">
-          <p>
-            Download my CV as a PDF for a concise overview of experience,
-            education, and selected work.
-          </p>
-          <div class="cv-stats" aria-label="CV highlights">
+          <div>
+            <h3>Education</h3>
+            <p><strong>Seoul National University</strong></p>
+            <p class="muted" style="font-size:14px;margin-top:2px;">B.S. Computer Science &amp; Engineering &middot; In progress</p>
+          </div>
+          <div class="cv-stats" aria-label="Skills">
             <div class="cv-stat">
-              <strong>PDF</strong>
-              <span>Format</span>
+              <strong>Python</strong>
+              <span>LLM / ML</span>
             </div>
             <div class="cv-stat">
-              <strong>Static</strong>
-              <span>GitHub Pages ready</span>
+              <strong>C++ / Java</strong>
+              <span>Systems &amp; OOP</span>
             </div>
             <div class="cv-stat">
-              <strong>1</strong>
-              <span>Download link</span>
+              <strong>Flutter</strong>
+              <span>Mobile / Web</span>
             </div>
+          </div>
+          <div>
+            <h3 style="margin-bottom:10px;">Skills</h3>
+            <ul class="contact-list" style="margin-top:0;">
+              <li><span class="pill-link">Python</span></li>
+              <li><span class="pill-link">C++</span></li>
+              <li><span class="pill-link">Java</span></li>
+              <li><span class="pill-link">Flutter</span></li>
+              <li><span class="pill-link">HTML / CSS / JS</span></li>
+            </ul>
           </div>
           <a class="button primary" href="assets/cv.pdf">Download CV</a>
         </div>
@@ -1005,11 +1167,74 @@
         </div>
         <div class="body-copy">
           <p>
-            Visit GitHub to find current code, experiments, and project updates.
+            Feel free to reach out by email or find me on GitHub and Instagram.
           </p>
           <ul class="contact-list" aria-label="Contact links">
             <li>
-              <a class="pill-link" href="https://github.com/cloNoey">GitHub</a>
+              <a class="pill-link" href="mailto:tmddus0723@snu.ac.kr">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="16" height="16" stroke="currentColor" stroke-width="2">
+                  <path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" />
+                </svg>
+                tmddus0723@snu.ac.kr
+              </a>
+            </li>
+            <li>
+              <a class="pill-link" href="https://github.com/cloNoey">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="16" height="16" stroke="currentColor" stroke-width="2">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                </svg>
+                github.com/cloNoey
+              </a>
+            </li>
+            <li>
+              <a class="pill-link" href="https://instagram.com/clo_noey">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="16" height="16" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+                clo_noey
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section-grid" id="ai-usage" aria-labelledby="ai-title">
+        <div>
+          <h2 id="ai-title">AI Usage</h2>
+          <p class="section-kicker">Transparency</p>
+        </div>
+        <div class="body-copy">
+          <p>
+            This site was built with AI assistance. I used
+            <strong>Claude Code</strong> (Anthropic) and <strong>Codex</strong> (OpenAI)
+            throughout the process — for layout and CSS design, writing section copy,
+            generating SVG icons, and iterating on the overall structure.
+          </p>
+          <p>
+            AI handled the scaffolding and suggestions; all content, project
+            descriptions, and personal information reflect my own work and intent.
+            I reviewed and directed every change.
+          </p>
+          <ul class="contact-list" style="margin-top:16px;">
+            <li>
+              <span class="pill-link">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="14" height="14" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/>
+                  <path d="M12 8v4l3 3"/>
+                </svg>
+                Claude Code — design, content, code
+              </span>
+            </li>
+            <li>
+              <span class="pill-link">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="14" height="14" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+                Codex — code generation &amp; refactoring
+              </span>
             </li>
           </ul>
         </div>
